@@ -28,9 +28,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Pawel Pieczul - Initial contribution
  */
-@NonNullByDefault
 @Component(service = { DynamicStateDescriptionProvider.class,
         LoxoneDynamicStateDescriptionProvider.class }, immediate = true)
+@NonNullByDefault
 public class LoxoneDynamicStateDescriptionProvider implements DynamicStateDescriptionProvider {
 
     private Map<ChannelUID, StateDescription> descriptions = new ConcurrentHashMap<>();
@@ -62,9 +62,7 @@ public class LoxoneDynamicStateDescriptionProvider implements DynamicStateDescri
     public @Nullable StateDescription getStateDescription(Channel channel,
             @Nullable StateDescription originalStateDescription, @Nullable Locale locale) {
         StateDescription description = descriptions.get(channel.getUID());
-        if (description != null) {
-            logger.debug("Providing state description for channel {}", channel.getUID());
-        }
+        logger.trace("Providing state description for channel {}", channel.getUID());
         return description;
     }
 }
