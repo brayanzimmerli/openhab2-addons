@@ -77,8 +77,8 @@ public class MySensorsMqttConnection extends MySensorsAbstractConnection impleme
             public void write(int b) throws IOException {
             }
         });
-
         connection = MySensorsMqttService.getMqttService().getBrokerConnection(myGatewayConfig.getBrokerName());
+
         if (connection == null) {
             logger.error("No connection to broker: {}", myGatewayConfig.getBrokerName());
             return false;
@@ -86,8 +86,7 @@ public class MySensorsMqttConnection extends MySensorsAbstractConnection impleme
 
         connection.addConnectionObserver(this);
 
-        connectionStateChanged(
-                connection.isConnected() ? MqttConnectionState.CONNECTED : MqttConnectionState.DISCONNECTED, null);
+        connectionStateChanged(connection.connectionState(), null);
 
         try {
             connection.addConsumer(myMqttSub);
